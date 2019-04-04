@@ -16,7 +16,7 @@ require (
 	github.com/fagongzi/util v0.0.0-20180330021808-4acf02da76a9
 	github.com/garyburd/redigo v0.0.0-20180228092057-a69d19351219
 	github.com/ghodss/yaml v1.0.0 // indirect
-	github.com/gogo/protobuf v0.0.0-20171007142547-342cbe0a0415 // indirect
+	github.com/gogo/protobuf v0.0.0-20171007142547-342cbe0a0415
 	github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b // indirect
 	github.com/golang/groupcache v0.0.0-20181024230925-c65c006176ff // indirect
 	github.com/golang/protobuf v0.0.0-20180430185241-b4deda0973fb
@@ -40,7 +40,7 @@ require (
 	github.com/sirupsen/logrus v1.2.0 // indirect
 	github.com/soheilhy/cmux v0.0.0-20180129155001-e09e9389d85d
 	github.com/tmc/grpc-websocket-proxy v0.0.0-20171017195756-830351dc03c6 // indirect
-	github.com/ugorji/go/codec v0.0.0-20181209151446-772ced7fd4c2 // indirect
+	github.com/ugorji/go/codec v0.0.0-20190320090025-2dc34c0b8780 // indirect
 	github.com/valyala/bytebufferpool v0.0.0-20160817181652-e746df99fe4a // indirect
 	github.com/valyala/fasthttp v0.0.0-20171207120941-e5f51c11919d
 	github.com/valyala/fasttemplate v0.0.0-20170224212429-dcecefd839c4 // indirect

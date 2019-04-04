@@ -31,6 +31,9 @@ var (
 	ErrRewriteNotMatch = errors.New("rewrite not match request url")
 )
 
+
+// 合并请求的时候，使用同一的 ContentType
+// 同时需要去掉一些 header 
 var (
 	// MultiResultsContentType merge operation using content-type
 	MultiResultsContentType = "application/json; charset=utf-8"
@@ -53,6 +56,7 @@ const (
 
 // Proxy Proxy
 type Proxy struct {
+	// 这里有一个索，需要关注是做什么
 	sync.RWMutex
 
 	dispatchIndex, copyIndex uint64
@@ -106,15 +110,20 @@ func NewProxy(cfg *Cfg) *Proxy {
 
 // Start start proxy
 func (p *Proxy) Start() {
+	// 起换一个 goroutine 监听停止指令
 	go p.listenToStop()
 
+	// TODO
 	util.StartMetricsPush(p.runner, p.cfg.Metric)
 
+	// 创建 copy 与 dispatch 的 worker
 	p.readyToCopy()
 	p.readyToDispatch()
 
 	log.Infof("gateway proxy started at <%s>", p.cfg.Addr)
 
+	// 没有启用 websocket 的情况下，直接监听 http server
+	// 但是这里感觉应该专门判断下开启了 ws 做特殊处理厚一些
 	if !p.cfg.Option.EnableWebSocket {
 		err := fasthttp.ListenAndServe(p.cfg.Addr, p.ServeFastHTTP)
 		if err != nil {
@@ -124,6 +133,7 @@ func (p *Proxy) Start() {
 		return
 	}
 
+	// 以下流程是对 ws 协议的处理流程，直接监听在 tcp 协议上。
 	l, err := net.Listen("tcp", p.cfg.Addr)
 	if err != nil {
 		log.Fatalf("gateway proxy start failed, errors:\n%+v",
@@ -134,6 +144,7 @@ func (p *Proxy) Start() {
 	webSocketL := m.Match(cmux.HTTP1HeaderField("Upgrade", "websocket"))
 	httpL := m.Match(cmux.Any())
 
+	// http1 用于升级请求
 	go func() {
 		httpS := fasthttp.Server{
 			Handler: p.ServeFastHTTP,
@@ -145,6 +156,7 @@ func (p *Proxy) Start() {
 		}
 	}()
 
+	// ws 用于维持请求
 	go func() {
 		webSocketS := &http.Server{
 			Handler: p,
@@ -174,6 +186,7 @@ func (p *Proxy) Stop() {
 	log.Infof("stop: gateway proxy stopped")
 }
 
+// 监听停止的 chan，如果收到，则，停止 proxy
 func (p *Proxy) listenToStop() {
 	<-p.stopC
 	p.doStop()
@@ -192,6 +205,7 @@ func (p *Proxy) stopRPC() error {
 }
 
 func (p *Proxy) setStopped() {
+	// 停止标记
 	atomic.StoreInt32(&p.stopped, 1)
 }
 
@@ -199,6 +213,12 @@ func (p *Proxy) isStopped() bool {
 	return atomic.LoadInt32(&p.stopped) == 1
 }
 
+/*
+1. initDispatcher 初始化后端分发路由表
+2. initFilters 初始化插件
+3. 注册代理
+4. 加载路由表 ddispatcher.load 
+*/
 func (p *Proxy) init() {
 	err := p.initDispatcher()
 	if err != nil {
@@ -217,9 +237,13 @@ func (p *Proxy) init() {
 			err)
 	}
 
+	// 加载了很多的数据，可以去到详细定义去查看
 	p.dispatcher.load()
 }
 
+/* 
+从存储中读取后端地址，并对 dispatcher 进行初始化
+ */
 func (p *Proxy) initDispatcher() error {
 	s, err := store.GetStoreFrom(p.cfg.AddrStore, p.cfg.Namespace, p.cfg.AddrStoreUserName, p.cfg.AddrStorePwd)
 
@@ -231,6 +255,9 @@ func (p *Proxy) initDispatcher() error {
 	return nil
 }
 
+/* 
+加载创建，并执行插件的 init 方法，都成功后，添加到插件列表中
+*/
 func (p *Proxy) initFilters() {
 	for _, filter := range p.cfg.Filers {
 		f, err := p.newFilter(filter)
@@ -253,6 +280,10 @@ func (p *Proxy) initFilters() {
 	}
 }
 
+/* 
+叫 readyToDispatch 更合适
+根据配置，创建 dispatch req chan，队列长度为 1024 个
+*/
 func (p *Proxy) readyToDispatch() {
 	for i := uint64(0); i < p.cfg.Option.LimitCountDispatchWorker; i++ {
 		c := make(chan *dispathNode, 1024)
@@ -276,6 +307,10 @@ func (p *Proxy) readyToDispatch() {
 	}
 }
 
+/* 
+叫 initCopyWorker 更合适
+根据配置，创建 copy req chan，队列长度为 1024 个
+*/
 func (p *Proxy) readyToCopy() {
 	for i := uint64(0); i < p.cfg.Option.LimitCountCopyWorker; i++ {
 		c := make(chan *copyReq, 1024)
@@ -451,7 +486,9 @@ func (p *Proxy) doProxy(dn *dispathNode, adjustH func(*proxyContext)) {
 		return
 	}
 
+	// req上下文
 	ctx := dn.ctx
+	// runtime
 	svr := dn.dest
 	if nil == svr {
 		dn.err = ErrNoServer
@@ -463,9 +500,10 @@ func (p *Proxy) doProxy(dn *dispathNode, adjustH func(*proxyContext)) {
 		return
 	}
 
+	// 复制原始请求
 	forwardReq := copyRequest(&ctx.Request)
 
-	// change url
+	// change url 是否需要重写
 	if dn.needRewrite() {
 		// if not use rewrite, it only change uri path and query string
 		realPath := dn.rewiteURL(&ctx.Request)
@@ -488,6 +526,7 @@ func (p *Proxy) doProxy(dn *dispathNode, adjustH func(*proxyContext)) {
 		}
 	}
 
+	// 获取新的上下文，如果原始上下文中有，则copy
 	c := acquireContext()
 	c.init(p.dispatcher, ctx, forwardReq, dn)
 	if adjustH != nil {
@@ -540,23 +579,23 @@ func (p *Proxy) doProxy(dn *dispathNode, adjustH func(*proxyContext)) {
 
 		times++
 
-		// skip succeed
+		// skip succeed 成功的，流程结束
 		if err == nil && res.StatusCode() < fasthttp.StatusBadRequest {
 			break
 		}
 
-		// skip no retry strategy
+		// skip no retry strategy 没有重试策略的，直接结束
 		if !dn.hasRetryStrategy() {
 			break
 		}
 
-		// skip not match
+		// skip not match 重试策略不匹配
 		if !dn.matchAllRetryStrategy() &&
 			!dn.matchRetryStrategy(int32(res.StatusCode())) {
 			break
 		}
 
-		// retry with strategiess
+		// retry with strategiess 重试次数超过设置
 		retry := dn.retryStrategy()
 		if times >= retry.MaxTimes {
 			log.Infof("%s: dipatch node %d sent times over the max %d",
@@ -571,6 +610,7 @@ func (p *Proxy) doProxy(dn *dispathNode, adjustH func(*proxyContext)) {
 		}
 
 		fasthttp.ReleaseResponse(res)
+		// 选择一个新的server发送请求
 		p.dispatcher.selectServer(&ctx.Request, dn, dn.requestTag)
 		svr = dn.dest
 		if nil == svr {

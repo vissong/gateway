@@ -11,8 +11,10 @@ import (
 	"syscall"
 	"time"
 
+	// proxy 主要逻辑实现
 	"github.com/fagongzi/gateway/pkg/proxy"
 	"github.com/fagongzi/gateway/pkg/util"
+	// 哔了狗的自己实现了一个日志库。。
 	"github.com/fagongzi/log"
 )
 
@@ -105,11 +107,13 @@ func main() {
 	}
 
 	p := proxy.NewProxy(getCfg())
+	// 在 goroutine 下启动 proxy
 	go p.Start()
 
 	waitStop(p)
 }
 
+// waitStop 监听进程停止的信号量，结束 Proxy
 func waitStop(p *proxy.Proxy) {
 	sc := make(chan os.Signal, 1)
 	signal.Notify(sc,
@@ -166,12 +170,14 @@ func getCfg() *proxy.Cfg {
 		specs = filters
 	}
 
+	// 检查并添加前置过滤器配置
 	for _, spec := range *specs {
 		filter, err := proxy.ParseFilter(spec)
 		if err != nil {
 			log.Fatalf("boostrap: parse filter failed: errors:\n%+v", err)
 		}
 
+		// 为什么就算前面解析失败了，还要添加到过滤器中？
 		cfg.AddFilter(filter)
 	}
 

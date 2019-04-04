@@ -40,6 +40,7 @@ func (r *dispatcher) load() {
 	r.loadRoutings()
 }
 
+/* 从存储中读取代理设置，最多 32 个 */
 func (r *dispatcher) loadProxies() {
 	log.Infof("load proxies")
 
@@ -53,6 +54,7 @@ func (r *dispatcher) loadProxies() {
 	}
 }
 
+// 加载集群配置
 func (r *dispatcher) loadClusters() {
 	log.Infof("load clusters")
 
@@ -66,6 +68,7 @@ func (r *dispatcher) loadClusters() {
 	}
 }
 
+// 加载后端服务器
 func (r *dispatcher) loadServers() {
 	log.Infof("load servers")
 
@@ -79,6 +82,7 @@ func (r *dispatcher) loadServers() {
 	}
 }
 
+// 加载转发规则
 func (r *dispatcher) loadRoutings() {
 	log.Infof("load routings")
 
@@ -92,6 +96,7 @@ func (r *dispatcher) loadRoutings() {
 	}
 }
 
+// 根据集群ID拉取绑定的Server，并进行绑定操作
 func (r *dispatcher) loadBinds() {
 	log.Infof("load binds")
 
@@ -118,6 +123,7 @@ func (r *dispatcher) loadBinds() {
 	}
 }
 
+// 加载api列表
 func (r *dispatcher) loadAPIs() {
 	log.Infof("load apis")
 

@@ -6,7 +6,7 @@ github.com/buger/jsonparser v0.0.0-20180318095312-2cac668e8456 h1:SnUWpAH4lEUoS8
 github.com/buger/jsonparser v0.0.0-20180318095312-2cac668e8456/go.mod h1:bbYlZJ7hK1yFx9hf58LP0zeX7UjIGs20ufpu3evjr+s=
 github.com/coreos/bbolt v1.3.0 h1:HIgH5xUWXT914HCI671AxuTTqjj64UOFr7pHn48LUTI=
 github.com/coreos/bbolt v1.3.0/go.mod h1:iRUV2dpdMOn7Bo10OQBFzIJO9kkE559Wcmn+qkEiiKk=
-github.com/coreos/etcd v0.0.0-20180615164156-33245c6b5b49 h1:HCRuJemQdX4MemClfgEfFum02j+qZQzZi6KulR5/hKY=
+github.com/coreos/etcd v0.0.0-20180615164156-33245c6b5b49 h1:fmdTpw6RubsZjYJf2TGFIXviI0iXRXza7ch4PkkgLaQ=
 github.com/coreos/etcd v0.0.0-20180615164156-33245c6b5b49/go.mod h1:uF7uidLiAD3TWHmW31ZFd/JWoc32PjwdhPthX9715RE=
 github.com/coreos/go-semver v0.2.0 h1:3Jm3tLmsgAYcjC+4Up7hJrFBPr+n7rAqYeSw/SZazuY=
 github.com/coreos/go-semver v0.2.0/go.mod h1:nnelYz7RCh+5ahJtPPxZlU+153eP4D4r3EedlOD2RNk=
@@ -20,8 +20,6 @@ github.com/dgrijalva/jwt-go v0.0.0-20180308231308-06ea1031745c h1:uwivskbBuX2rEO
 github.com/dgrijalva/jwt-go v0.0.0-20180308231308-06ea1031745c/go.mod h1:E3ru+11k8xSBh+hMPgOLZmtrrCbhqsmaPHjLKYnJCaQ=
 github.com/fagongzi/goetty v0.0.0-20180427060148-8f06d410550f h1:8qmWoPu1y2s2qHVoac+4MzJEWp+tWzdzw7PbhbQ7oLg=
 github.com/fagongzi/goetty v0.0.0-20180427060148-8f06d410550f/go.mod h1:lLUyHhtjlOqatxVXgyLocwoI2o359JzLE7EWRGZiGw4=
-github.com/fagongzi/grpcx v0.0.0-20180330022349-f6b611cab691 h1:/GdQcr98uAhehm6mOTB5ElnRDT8MvRfcVeNgeSFoizc=
-github.com/fagongzi/grpcx v0.0.0-20180330022349-f6b611cab691/go.mod h1:OJr1w37s39K05FjX0OxQ/Nd6E9jp3OVaCiHi7eL+JV4=
 github.com/fagongzi/grpcx v1.1.0 h1:TZurQaMAmZv/OdQShNj45VdW5Fw8+nPpXSGvJKFlDag=
 github.com/fagongzi/grpcx v1.1.0/go.mod h1:OJr1w37s39K05FjX0OxQ/Nd6E9jp3OVaCiHi7eL+JV4=
 github.com/fagongzi/log v0.0.0-20170831135209-9a647df25e0e h1:ze4Ee25lIEbvKN0niRh0o+PgfE0O36ZsX44S8qMB1Go=
@@ -87,8 +85,11 @@ github.com/stretchr/testify v1.2.2 h1:bSDNvY7ZPG5RlJ8otE/7V6gMiyenm9RtJ7IUVIAoJ1
 github.com/stretchr/testify v1.2.2/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXfy6kDkUVs=
 github.com/tmc/grpc-websocket-proxy v0.0.0-20171017195756-830351dc03c6 h1:lYIiVDtZnyTWlNwiAxLj0bbpTcx1BWCFhXjfsvmPdNc=
 github.com/tmc/grpc-websocket-proxy v0.0.0-20171017195756-830351dc03c6/go.mod h1:ncp9v5uamzpCO7NfCPTXjqaC+bZgJeR0sMTm6dMHP7U=
-github.com/ugorji/go/codec v0.0.0-20181209151446-772ced7fd4c2 h1:EICbibRW4JNKMcY+LsWmuwob+CRS1BmdRdjphAm9mH4=
+github.com/ugorji/go v1.1.2 h1:JON3E2/GPW2iDNGoSAusl1KDf5TRQ8k8q7Tp097pZGs=
+github.com/ugorji/go v1.1.2/go.mod h1:hnLbHMwcvSihnDhEfx2/BzKp2xb0Y+ErdfYcrs9tkJQ=
 github.com/ugorji/go/codec v0.0.0-20181209151446-772ced7fd4c2/go.mod h1:VFNgLljTbGfSG7qAOspJ7OScBnGdDN/yBr0sguwnwf0=
+github.com/ugorji/go/codec v0.0.0-20190320090025-2dc34c0b8780 h1:vG/gY/PxA3v3l04qxe3tDjXyu3bozii8ulSlIPOYKhI=
+github.com/ugorji/go/codec v0.0.0-20190320090025-2dc34c0b8780/go.mod h1:iT03XoTwV7xq/+UGwKO3UbC1nNNlopQiY61beSdrtOA=
 github.com/valyala/bytebufferpool v0.0.0-20160817181652-e746df99fe4a h1:AOcehBWpFhYPYw0ioDTppQzgI8pAAahVCiMSKTp9rbo=
 github.com/valyala/bytebufferpool v0.0.0-20160817181652-e746df99fe4a/go.mod h1:6bBcMArwyJ5K/AmCkWv1jt77kVWyCJ6HpOuEn7z0Csc=
 github.com/valyala/fasthttp v0.0.0-20171207120941-e5f51c11919d h1:pAXG0woN37FQD08beB53orVchWU97qUUdjKtSuMGqi4=
@@ -101,9 +102,7 @@ golang.org/x/crypto v0.0.0-20180904163835-0709b304e793 h1:u+LnwYTOOW7Ukr/fppxEb1
 golang.org/x/crypto v0.0.0-20180904163835-0709b304e793/go.mod h1:6SG95UA2DQfeDnfUPMdvaQW0Q7yPrPDi9nlGo2tz2b4=
 golang.org/x/net v0.0.0-20180712202826-d0887baf81f4 h1:KDF3PK6A+dkI7c4O8QbMtJqcXE3LdNJFGZECIlifQOg=
 golang.org/x/net v0.0.0-20180712202826-d0887baf81f4/go.mod h1:mL1N/T3taQHkDXs73rZJwtUhF3w3ftmwwsq0BUmARs4=
-golang.org/x/sync v0.0.0-20181108010431-42b317875d0f h1:Bl/8QSvNqXvPGPGXa2z5xUTmV7VDcZyvRZ+QQXkXTZQ=
 golang.org/x/sync v0.0.0-20181108010431-42b317875d0f/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
-golang.org/x/sys v0.0.0-20180905080454-ebe1bf3edb33 h1:I6FyU15t786LL7oL/hn43zqTuEGr4PN7F4XJ1p4E3Y8=
 golang.org/x/sys v0.0.0-20180905080454-ebe1bf3edb33/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
 golang.org/x/text v0.0.0-20171214130843-f21a4dfb5e38 h1:yr7ItWHARpqySNZjEh5mPMHrw3xPR9tMnomFZVcO1mQ=
 golang.org/x/text v0.0.0-20171214130843-f21a4dfb5e38/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
@@ -113,7 +112,5 @@ google.golang.org/genproto v0.0.0-20180716172848-2731d4fa720b h1:mXqBiicV0B+k8wz
 google.golang.org/genproto v0.0.0-20180716172848-2731d4fa720b/go.mod h1:JiN7NxoALGmiZfu7CAH4rXhgtRTLTxftemlI0sWmxmc=
 google.golang.org/grpc v0.0.0-20180619221905-168a6198bcb0 h1:ij3kgpkq8Hem+1Atd8RiMnen0Jhqs+kJfQfVdoZvy7U=
 google.golang.org/grpc v0.0.0-20180619221905-168a6198bcb0/go.mod h1:yo6s7OP7yaDglbqo1J04qKzAhqBH6lvTonzMVmEdcZw=
-gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405 h1:yhCVgyC4o1eVCa2tZl7eS0r+SDo693bJlVdllGtEeKM=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
-gopkg.in/yaml.v2 v2.2.2 h1:ZCJp+EgiOT7lHqUV2J862kp8Qj64Jo6az82+3Td9dZw=
 gopkg.in/yaml.v2 v2.2.2/go.mod h1:hI93XBmqTisBFMUTm0b8Fm+jr3Dg1NNxqwp+5A1VGuI=
